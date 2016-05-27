@@ -17,14 +17,14 @@ body {
   margin: 15px 0;
 }
 
-#contacts {
+#responses {
   background-color: #FFFDF7;
   border-radius: 3px;
   margin: 0 auto;
   width: 960px;
 }
 
-#contacts .contact {
+#responses .response {
   font-weight: 700;
   font-size: 20px;
   color: #595959;
@@ -33,13 +33,13 @@ body {
   padding: 15px;
 }
 
-#contacts .header {
+#responses .header {
   background-color: #CFCED4;
   border-radius: 3px;
   font-size: 23px;
 }
 
-.contact-text {
+.response-text {
   top: 3px;
   position: relative;
 }

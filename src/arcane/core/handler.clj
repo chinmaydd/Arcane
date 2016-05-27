@@ -6,7 +6,7 @@
             [arcane.core.models.query-defs :as query]))
 
 (defn init []
-  (query/create-contacts-table-if-not-exists!))
+  (query/create-responses-table-if-not-exists!))
 
 (defroutes app-routes
   (route/not-found "Not Found"))

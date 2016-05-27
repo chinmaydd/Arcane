@@ -2,46 +2,52 @@
   (:require [ring.util.response :as response]
             [compojure.core :refer :all]
             [arcane.core.views.arcane-layout :refer [common-layout
-                                                                 read-contact
-                                                                 add-contact-form
-                                                                 edit-contact]]
+                                                                 read-response
+                                                                 add-response-form
+                                                                 edit-response]]
             [arcane.core.models.query-defs :as query]))
 
-(defn display-contact [contact contact-id]
-  (if (not= (and contact-id (Integer. contact-id)) (:id contact))
-    (read-contact contact)
-    (edit-contact contact)))
+(defn display-response [response response-id]
+  (if (not= (and response-id (Integer. response-id)) (:id response))
+    (read-response response)
+    (edit-response response)))
 
 (defn post-route [request]
   (let [name  (get-in request [:params :name])
         phone (get-in request [:params :phone])
-        email (get-in request [:params :email])]
-    (query/insert-contact<! {:name name :phone phone :email email})
+        email (get-in request [:params :email])
+        place (get-in request [:params :place])
+        secret (get-in request [:params :secret])
+        ]
+    (query/insert-response<! {:name name :phone phone :email email :place place :secret secret})
     (response/redirect "/")))
 
 (defn get-route [request]
-  (let [contact-id (get-in request [:params :contact-id])]
+  (let [response-id (get-in request [:params :response-id])]
     (common-layout
-      (for [contact (query/all-contacts)]
-        (display-contact contact contact-id))
-      (add-contact-form))))
+      (for [response (query/all-responses)]
+        (display-response response response-id))
+      (add-response-form))))
 
 (defn delete-route [request]
-  (let [contact-id (get-in request [:params :contact-id])]
-    (query/delete-contact<! {:id (Integer. contact-id)})
+  (let [response-id (get-in request [:params :response-id])]
+    (query/delete-response<! {:id (Integer. response-id)})
     (response/redirect "/")))
 
 (defn update-route [request]
-  (let [contact-id (get-in request [:params :id])
+  (let [response-id (get-in request [:params :id])
         name       (get-in request [:params :name])
         phone      (get-in request [:params :phone])
-        email      (get-in request [:params :email])]
-    (query/update-contact<! {:name name :phone phone :email email :id (Integer. contact-id)})
+        email      (get-in request [:params :email])
+        place (get-in request [:params :place])
+        secret (get-in request [:params :secret])
+        ]
+    (query/update-response<! {:name name :phone phone :email email :place place :secret secret :id (Integer. response-id)})
     (response/redirect "/")))
 
 (defroutes arcane-routes
   (GET  "/"                   [] get-route)
   (POST "/post"               [] post-route)
-  (GET  "/edit/:contact-id"   [] get-route)
-  (POST "/edit/:contact-id"   [] update-route)
-  (POST "/delete/:contact-id" [] delete-route))
+  (GET  "/edit/:response-id"   [] get-route)
+  (POST "/edit/:response-id"   [] update-route)
+  (POST "/delete/:response-id" [] delete-route))

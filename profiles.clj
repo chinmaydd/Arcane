@@ -1,2 +1,2 @@
-{:dev-env-vars  {:env {:database-url  "postgres://address_book_user:password1@127.0.0.1:5432/address_book"}}
- :test-env-vars {:env {:database-url  "postgres://address_book_user:password1@127.0.0.1:5432/address_book_test"}}}
+{:dev-env-vars  {:env {:database-url  "postgres://arcane_user:password1@127.0.0.1:5432/arcane"}}
+ :test-env-vars {:env {:database-url  "postgres://arcane_user:password1@127.0.0.1:5432/arcane_test"}}}
